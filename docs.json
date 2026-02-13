@@ -3,8 +3,8 @@
   "name": "VTULab Docs",
   "colors": {
     "primary": "#6236FF",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "light": "#6236FF",
+    "dark": "#6236FF"
   },
   "favicon": "/favicon.svg",
   "navigation": {
