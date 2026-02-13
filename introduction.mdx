@@ -1,46 +1,72 @@
 ---
 title: "Introduction"
-description: "Welcome to the VTULab API! 👋 our"
+description: "Welcome to the VTULab API — Powering Identity & VTU Infrastructure Across Africa."
 ---
 
 <img
   className="block dark:hidden"
   src="/images/hero-light.png"
-  alt="Hero Light"
+  alt="VTULab API"
 />
 
-## Setting up
+<img
+  className="hidden dark:block hidden dark:block"
+  src="images/WhatsAppImage2026-02-13at7.32.33PM.jpeg"
+  alt="VTULab API Dark"
+/>
 
-The first step to world-class documentation is setting up your editing environments.
+<img
+  className="hidden dark:block dark:hidden"
+  src="images/best-deal-banner.jpeg"
+  alt="VTULab API Dark"
+/>
+
+## 👋 Welcome to VTULab
+
+VTULab provides powerful APIs for:
+
+- ✅ NIN Verification
+- ✅ Identity Services
+- ✅ Airtime & Data Purchase
+- ✅ Wallet & Transaction Management
+
+Whether you're building a fintech app, verification platform, or telecom service — VTULab helps you launch faster.
+
+---
+
+## 🚀 Getting Started
+
+Integrating VTULab is simple:
 
 <CardGroup cols={2}>
-  <Card icon="pen-to-square" href="https://mintlify.com/docs/quickstart" title="Edit Your Docs">
-    Get your docs set up locally for easy development
+  <Card icon="key" href="/authentication" title="Authentication">
+    Use your API key to authenticate requests securely.
   </Card>
-  <Card icon="image" href="https://mintlify.com/docs/development" title="Preview Changes">
-    Preview your changes before you push to make sure they're perfect
+  <Card icon="shield-check" href="/test-and-live" title="Test & Live Mode">
+    Switch between sandbox and production using your API key.
   </Card>
 </CardGroup>
 
-## Make it yours
+---
 
-Update your docs to your brand and add valuable content for the best user conversion.
+## 🔐 How It Works
 
-<CardGroup cols={2}>
-  <Card icon="palette" href="https://mintlify.com/docs/settings/global" title="Customize Style">
-    Customize your docs to your company's colors and brands
-  </Card>
-  <Card icon="code" href="https://mintlify.com/docs/api-playground/openapi" title="Referen               ce APIs">
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card icon="screwdriver-wrench" href="https://mintlify.com/docs/content/components/accordions" title="Add Components">
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card icon="stars" href="https://mintlify.com/customers" title="Get Inspiration">
-    Check out our showcase of our favorite documentation👋
-  </Card>
-</CardGroup>
+VTULab uses **one endpoint system**.
 
-<Card icon="sparkles">
-  
-</Card>
+You don't need separate sandbox URLs.
+
+Instead:
+
+- `pk_test_...` → Test Mode
+- `pk_live_...` → Live Mode
+
+The API automatically detects your mode from the key.
+
+Example:
+
+```python
+curl https://api.vtulab.com/v1/identity/nin/verify \
+  -H "Authorization: Bearer pk_test_xxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{"nin": "12345678901"}'
+```
