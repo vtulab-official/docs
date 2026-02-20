@@ -1,36 +1,21 @@
 ---
 title: "Introduction"
-description: "Welcome to the VTULab API — Powering Identity & VTU Infrastructure Across Africa."
+description: "Welcome to the VTULab API — powering identity and VTU infrastructure across Africa."
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="VTULab API"
-/>
-
-<img
-  className="hidden dark:block hidden dark:block"
-  src="images/WhatsAppImage2026-02-13at7.32.33PM.jpeg"
-  alt="VTULab API Dark"
-/>
-
-<img
-  className="hidden dark:block dark:hidden"
-  src="images/best-deal-banner.jpeg"
-  alt="VTULab API Dark"
-/>
+<img className="block dark:hidden" src="/images/hero-light.png" alt="VTULab API" />
+<img className="hidden dark:block" src="/images/hero-dark.png" alt="VTULab API Dark" />
 
 ## 👋 Welcome to VTULab
 
-VTULab provides powerful APIs for:
+VTULab provides reliable APIs for:
 
-- ✅ NIN Verification
-- ✅ Identity Services
-- ✅ Airtime & Data Purchase
-- ✅ Wallet & Transaction Management
+- ✅ NIN verification
+- ✅ Identity services
+- ✅ Airtime and data purchases
+- ✅ Wallet and transaction management
 
-Whether you're building a fintech app, verification platform, or telecom service — VTULab helps you launch faster.
+Whether you're building a fintech app, verification platform, or telecom service, VTULab helps you launch faster.
 
 ---
 
@@ -42,8 +27,8 @@ Integrating VTULab is simple:
   <Card icon="key" href="/authentication" title="Authentication">
     Use your API key to authenticate requests securely.
   </Card>
-  <Card icon="shield-check" href="/test-and-live" title="Test & Live Mode">
-    Switch between sandbox and production using your API key.
+  <Card icon="shield-check" href="/test-and-live" title="Test and Live Mode">
+    Switch between sandbox and production with your API key.
   </Card>
 </CardGroup>
 
@@ -51,20 +36,18 @@ Integrating VTULab is simple:
 
 ## 🔐 How It Works
 
-VTULab uses **one endpoint system**.
+VTULab uses a **single endpoint system**.
 
-You don't need separate sandbox URLs.
+You don’t need separate sandbox URLs. Instead:
 
-Instead:
-
-- `pk_test_...` → Test Mode
-- `pk_live_...` → Live Mode
+- `pk_test_...` → Test mode
+- `pk_live_...` → Live mode
 
 The API automatically detects your mode from the key.
 
-Example:
+Example request:
 
-```python
+```bash
 curl https://api.vtulab.com/v1/identity/nin/verify \
   -H "Authorization: Bearer pk_test_xxxxxxxxx" \
   -H "Content-Type: application/json" \
