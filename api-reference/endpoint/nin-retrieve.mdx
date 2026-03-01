@@ -1,16 +1,26 @@
-﻿---
+---
 title: "POST /v1/identity/nin/retrieve"
 description: "Retrieve NIN by phone number."
 ---
 
 ## Authentication
 
-Required (`Authorization: Bearer <API_KEY>` or `X-API-KEY: <API_KEY>`)
+Required: `api.user` + `throttle:api-key`
 
-## Request Body
+## Headers
 
-- `phone_number` (string, required): exactly 11 digits
-- `is_consent` (boolean-like, required): must be accepted
+- `Authorization: Bearer <API_KEY>` **or** `X-API-KEY: <API_KEY>`
+- `Content-Type: application/json`
+- `Accept: application/json`
+
+## Request Schema
+
+| Field | Type | Required | Rules |
+| --- | --- | --- | --- |
+| `phone_number` | string | Yes | `required`, `digits:11` |
+| `is_consent` | boolean/string | Yes | `required`, `accepted` |
+
+## Sample Request
 
 ```json
 {
@@ -23,7 +33,7 @@ Required (`Authorization: Bearer <API_KEY>` or `X-API-KEY: <API_KEY>`)
 
 ```bash
 curl -X POST "https://api.example.com/v1/identity/nin/retrieve" \
-  -H "X-API-KEY: lv_vtulab_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "X-API-KEY: <API_KEY>" \
   -H "Content-Type: application/json" \
   -d '{
     "phone_number": "08012345678",
@@ -31,14 +41,28 @@ curl -X POST "https://api.example.com/v1/identity/nin/retrieve" \
   }'
 ```
 
-## Success Response (200)
+## Sample Success Response (200)
 
 ```json
 {
   "status": true,
   "message": "NIN retrieval successful",
   "data": {
-    "note": "service-dependent object"
+    "type": "service-dependent object"
+  }
+}
+```
+
+## Sample Error Response (422)
+
+```json
+{
+  "status": false,
+  "message": "Validation failed.",
+  "errors": {
+    "phone_number": [
+      "The phone number field must be 11 digits."
+    ]
   }
 }
 ```

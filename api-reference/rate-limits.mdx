@@ -1,20 +1,22 @@
-﻿---
+---
 title: "Rate Limits"
-description: "Throughput limits for API-key protected routes."
+description: "throttle:api-key behavior and request-per-minute limits."
 ---
 
-Protected routes use `throttle:api-key`.
+Protected routes apply `throttle:api-key`.
 
 ## Limits
 
-- Authenticated API user: `60 requests/minute`
-- Fallback (no resolved API user): `30 requests/minute`
-
-If exceeded, Laravel throttle response applies.
+- Authenticated API user: **60 requests/minute**
+- Fallback unauthenticated context: **30 requests/minute**
 
 ## Scope
 
-Rate limiting is applied on:
+Applies to protected endpoints under:
 
 - `/v1/vtu/*`
 - `/v1/identity/*`
+
+## Exceeded Limit
+
+When the limit is exceeded, Laravel throttle handling returns `429 Too Many Requests`.

@@ -47,6 +47,12 @@
               "api-reference/endpoint/bvn-verify",
               "api-reference/endpoint/bvn-retrieve"
             ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "api-reference/webhooks"
+            ]
           }
         ]
       }

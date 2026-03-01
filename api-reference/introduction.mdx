@@ -1,38 +1,65 @@
-﻿---
-title: "VTULab API"
-description: "Overview of base URLs, versioning, and available products."
+---
+title: "API Overview"
+description: "Base URL behavior, versioning, and public health endpoint."
 ---
 
-## Base URL
+## Base URLs
 
-Your base URL depends on environment:
+API route mounting differs by environment:
 
-- Production: `https://api.{your-domain}`
-- Development/staging (local Laravel default): `https://{your-domain}/api`
+- **Production:** API is served on the `api.{app.domain}` subdomain.
+  - Example: `https://api.example.com`
+- **Non-production (local/staging):** API routes are prefixed with `/api`.
+  - Example: `https://example.com/api`
+
+Use the same endpoint paths in this documentation, and prepend the correct base URL for your environment.
 
 ## Versioning
 
-Current version is `v1`.
+Current version: `v1`
 
-- VTU: `/v1/vtu/*`
-- Identity: `/v1/identity/*`
+- VTU endpoints: `/v1/vtu/*`
+- Identity endpoints: `/v1/identity/*`
 
-## Health Endpoint
+## Public Endpoint
 
-`GET /`
+### GET `/`
+
+Returns basic API health/info.
+
+**Authentication:** Not required.
+
+**Headers:**
+
+- `Accept: application/json` (recommended)
+
+**cURL**
+
+```bash
+curl -X GET "https://api.example.com/" \
+  -H "Accept: application/json"
+```
+
+**Success response (200)**
 
 ```json
 {
-  "name": "VTULab API",
-  "status": "online",
-  "version": "v1",
-  "docs": "https://docs.vtulab.com"
+  "status": true,
+  "message": "API is healthy",
+  "data": {
+    "service": "api",
+    "version": "v1"
+  }
 }
 ```
 
-## Products Covered
+> `data` fields may vary by deployment.
 
-- Airtime purchase
-- Data purchase
-- NIN verification and retrieval
-- BVN verification and retrieval
+**Error response example (500)**
+
+```json
+{
+  "status": false,
+  "message": "Server error occurred."
+}
+```

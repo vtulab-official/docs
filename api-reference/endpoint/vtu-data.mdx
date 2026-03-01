@@ -1,16 +1,26 @@
-﻿---
+---
 title: "POST /v1/vtu/data"
-description: "Purchase a data plan for a phone number."
+description: "Purchase a data plan."
 ---
 
 ## Authentication
 
-Required (`Authorization: Bearer <API_KEY>` or `X-API-KEY: <API_KEY>`)
+Required: `api.user` + `throttle:api-key`
 
-## Request Body
+## Headers
 
-- `plan_id` (integer, required) - Must exist in `data_plans` table
-- `phone_number` (string, required) - 11 digits
+- `Authorization: Bearer <API_KEY>` **or** `X-API-KEY: <API_KEY>`
+- `Content-Type: application/json`
+- `Accept: application/json`
+
+## Request Schema
+
+| Field | Type | Required | Rules |
+| --- | --- | --- | --- |
+| `plan_id` | integer | Yes | `required`, `integer`, `exists:data_plans,id` |
+| `phone_number` | string | Yes | `required`, `string`, `regex:^\\d{11}$` |
+
+## Sample Request
 
 ```json
 {
@@ -23,7 +33,7 @@ Required (`Authorization: Bearer <API_KEY>` or `X-API-KEY: <API_KEY>`)
 
 ```bash
 curl -X POST "https://api.example.com/v1/vtu/data" \
-  -H "Authorization: Bearer lv_vtulab_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "Authorization: Bearer <API_KEY>" \
   -H "Content-Type: application/json" \
   -d '{
     "plan_id": 12,
@@ -31,23 +41,19 @@ curl -X POST "https://api.example.com/v1/vtu/data" \
   }'
 ```
 
-## Success Response (200)
+## Sample Success Response (200)
 
 ```json
 {
   "status": true,
   "message": "Data purchase successful",
   "data": {
-    "note": "service-dependent object"
+    "type": "service-dependent object"
   }
 }
 ```
 
-If a test key is used, message becomes:
-
-`Data purchase successful (test mode)`
-
-## Error Response (400)
+## Sample Error Response (422)
 
 ```json
 {

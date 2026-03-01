@@ -1,17 +1,27 @@
-﻿---
+---
 title: "POST /v1/vtu/airtime"
-description: "Purchase airtime for a phone number."
+description: "Purchase airtime."
 ---
 
 ## Authentication
 
-Required (`Authorization: Bearer <API_KEY>` or `X-API-KEY: <API_KEY>`)
+Required: `api.user` + `throttle:api-key`
 
-## Request Body
+## Headers
 
-- `network` (string, required): `mtn`, `airtel`, `glo`, `9mobile`
-- `phone_number` (string, required): 11 digits
-- `amount` (number, required): minimum `50`
+- `Authorization: Bearer <API_KEY>` **or** `X-API-KEY: <API_KEY>`
+- `Content-Type: application/json`
+- `Accept: application/json`
+
+## Request Schema
+
+| Field | Type | Required | Rules |
+| --- | --- | --- | --- |
+| `network` | string | Yes | `required`, `string` (intended values: `mtn`, `airtel`, `glo`, `9mobile`) |
+| `phone_number` | string | Yes | `required`, `string`, `regex:^\\d{11}$` |
+| `amount` | number | Yes | `required`, `numeric`, `min:50` |
+
+## Sample Request
 
 ```json
 {
@@ -25,7 +35,7 @@ Required (`Authorization: Bearer <API_KEY>` or `X-API-KEY: <API_KEY>`)
 
 ```bash
 curl -X POST "https://api.example.com/v1/vtu/airtime" \
-  -H "X-API-KEY: lv_vtulab_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "X-API-KEY: <API_KEY>" \
   -H "Content-Type: application/json" \
   -d '{
     "network": "mtn",
@@ -34,23 +44,19 @@ curl -X POST "https://api.example.com/v1/vtu/airtime" \
   }'
 ```
 
-## Success Response (200)
+## Sample Success Response (200)
 
 ```json
 {
   "status": true,
   "message": "Airtime purchase successful",
   "data": {
-    "note": "service-dependent object"
+    "type": "service-dependent object"
   }
 }
 ```
 
-If a test key is used, message becomes:
-
-`Airtime purchase successful (test mode)`
-
-## Error Response (400)
+## Sample Error Response (422)
 
 ```json
 {

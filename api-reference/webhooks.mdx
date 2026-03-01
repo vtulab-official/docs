@@ -1,0 +1,174 @@
+---
+title: "Webhooks"
+description: "Webhook endpoints, signature verification, and payload requirements."
+---
+
+Webhook routes are public endpoints and do not use API key auth.
+
+## Base Path
+
+- Production: `https://api.{app.domain}/webhooks/...`
+- Non-production: `https://{app.domain}/api/webhooks/...`
+
+## Route Casing
+
+Documented route paths preserve configured casing:
+
+- `/webhooks/Monnify`
+- `/webhooks/Payment-Point`
+
+Use exact casing above for reliability. If your infrastructure normalizes URL segments, lowercase variants may still resolve depending on server configuration.
+
+---
+
+## POST `/webhooks/Monnify`
+
+Processes Monnify transaction callbacks.
+
+### Authentication / Verification
+
+- Header required: `monnify-signature`
+- Signature algorithm: HMAC SHA512 (hex digest)
+- Signing input: raw request body
+- Secret: provider webhook secret
+
+### Processing Rule
+
+Only `eventType = SUCCESSFUL_TRANSACTION` is processed.
+
+### Headers
+
+- `monnify-signature: <hex_signature>`
+- `Content-Type: application/json`
+
+### Request Schema
+
+| Field | Type | Required | Rules |
+| --- | --- | --- | --- |
+| `eventType` | string | Yes | Must equal `SUCCESSFUL_TRANSACTION` for processing |
+
+> Additional payload fields are provider-defined.
+
+### Sample Request
+
+```json
+{
+  "eventType": "SUCCESSFUL_TRANSACTION"
+}
+```
+
+### cURL
+
+```bash
+curl -X POST "https://api.example.com/webhooks/Monnify" \
+  -H "Content-Type: application/json" \
+  -H "monnify-signature: <hex_signature>" \
+  -d '{
+    "eventType": "SUCCESSFUL_TRANSACTION"
+  }'
+```
+
+### Sample Success Response (200)
+
+```json
+{
+  "status": true,
+  "message": "Webhook processed successfully",
+  "data": {
+    "type": "service-dependent object"
+  }
+}
+```
+
+### Sample Error Response (400)
+
+```json
+{
+  "status": false,
+  "message": "Invalid webhook signature."
+}
+```
+
+---
+
+## POST `/webhooks/Payment-Point`
+
+Processes Payment-Point callbacks.
+
+### Authentication / Verification
+
+- Header required: `paymentpoint-signature`
+
+### Required Payload Fields
+
+- `transaction_id`
+- `settlement_amount`
+- `transaction_status`
+- `customer`
+
+### Headers
+
+- `paymentpoint-signature: <signature>`
+- `Content-Type: application/json`
+
+### Request Schema
+
+| Field | Type | Required | Rules |
+| --- | --- | --- | --- |
+| `transaction_id` | string | Yes | Required |
+| `settlement_amount` | number/string | Yes | Required |
+| `transaction_status` | string | Yes | Required |
+| `customer` | object/string | Yes | Required |
+
+### Sample Request
+
+```json
+{
+  "transaction_id": "abc123",
+  "settlement_amount": 1000,
+  "transaction_status": "successful",
+  "customer": {
+    "type": "service-dependent object"
+  }
+}
+```
+
+### cURL
+
+```bash
+curl -X POST "https://api.example.com/webhooks/Payment-Point" \
+  -H "Content-Type: application/json" \
+  -H "paymentpoint-signature: <signature>" \
+  -d '{
+    "transaction_id": "abc123",
+    "settlement_amount": 1000,
+    "transaction_status": "successful",
+    "customer": {}
+  }'
+```
+
+### Sample Success Response (200)
+
+```json
+{
+  "status": true,
+  "message": "Webhook processed successfully",
+  "data": {
+    "type": "service-dependent object"
+  }
+}
+```
+
+### Sample Error Response (422)
+
+```json
+{
+  "status": false,
+  "message": "Validation failed.",
+  "errors": {
+    "transaction_id": [
+      "The transaction id field is required."
+    ]
+  }
+}
+```

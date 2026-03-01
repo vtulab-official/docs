@@ -1,39 +1,73 @@
-﻿---
-title: "Errors"
-description: "Standard error envelope and common HTTP statuses."
+---
+title: "Error Handling"
+description: "Standard API response envelope and common failure payloads."
 ---
 
-API responses are forced to JSON.
+All API responses are JSON.
 
-## Standard Error Envelope
+## Success Wrapper
+
+```json
+{
+  "status": true,
+  "message": "string",
+  "data": {}
+}
+```
+
+`data` can be any valid JSON value.
+
+## Error Wrapper
 
 ```json
 {
   "status": false,
-  "message": "error message",
-  "errors": null
+  "message": "string",
+  "errors": {}
 }
 ```
 
-`errors` may be omitted for some controller-level failures.
+`errors` is optional and is usually present for validation failures.
 
-## Validation Error
+## Validation Error Shape
 
 ```json
 {
   "status": false,
   "message": "Validation failed.",
   "errors": {
-    "field": ["The field is required."]
+    "field": [
+      "The field is required."
+    ]
   }
+}
+```
+
+## Not Found Shape
+
+```json
+{
+  "status": false,
+  "message": "Resource not found."
+}
+```
+
+## Generic Server Error
+
+Production-safe message:
+
+```json
+{
+  "status": false,
+  "message": "Server error occurred."
 }
 ```
 
 ## Common Status Codes
 
-- `400` Bad request / invalid signature / processing failure
-- `401` Missing or invalid API key
-- `403` Unauthorized IP
-- `404` Resource not found
-- `429` Too many requests
-- `500` Server error
+- `400` Bad request
+- `401` Unauthorized
+- `403` Forbidden
+- `404` Not Found
+- `429` Too Many Requests
+- `500` Internal Server Error

@@ -1,36 +1,42 @@
-﻿---
+---
 title: "Authentication"
-description: "API key authentication and mode behavior."
+description: "API key formats, middleware behavior, and authorization failures."
 ---
 
-All protected endpoints require an API key.
+Protected endpoints use the `api.user` middleware.
 
-Use either header format:
+## API Key Headers
+
+Send your API key using **either** header:
 
 - `Authorization: Bearer <API_KEY>`
 - `X-API-KEY: <API_KEY>`
 
-## Key Types
+## Authorization Outcomes
 
-- Live key prefix: `lv_vtulab_sk_...`
-- Test key prefix: `sb_vtulab_sk_...`
+- Missing key: `401 Unauthorized`
+  - `"API Key is missing."`
+- Invalid or inactive key: `401 Unauthorized`
+  - `"Invalid or inactive API Key."`
+- IP not allowed (when key has `ip_whitelist` configured): `403 Forbidden`
+  - `"IP address not authorized."`
 
-The key determines API mode internally:
+## Key Mode Detection
 
-- Live key => `api_mode=live`
-- Test key => `api_mode=test`
+The key type sets request mode:
 
-## Auth Errors
+- Live key → `api_mode=live`
+- Test key → `api_mode=test`
 
-- `401 API Key is missing.`
-- `401 Invalid or inactive API Key.`
-- `403 IP address not authorized.` when IP whitelist is configured and request IP is not listed.
+## JSON Response Enforcement
 
-## Example
+`ForceJsonResponse` middleware enforces JSON responses for API requests.
+
+## Example (protected endpoint)
 
 ```bash
 curl -X POST "https://api.example.com/v1/vtu/airtime" \
-  -H "Authorization: Bearer lv_vtulab_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "Authorization: Bearer <API_KEY>" \
   -H "Content-Type: application/json" \
   -d '{
     "network": "mtn",
