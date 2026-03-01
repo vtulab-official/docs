@@ -1,0 +1,65 @@
+﻿---
+title: "POST /v1/vtu/airtime"
+description: "Purchase airtime for a phone number."
+---
+
+## Authentication
+
+Required (`Authorization: Bearer <API_KEY>` or `X-API-KEY: <API_KEY>`)
+
+## Request Body
+
+- `network` (string, required): `mtn`, `airtel`, `glo`, `9mobile`
+- `phone_number` (string, required): 11 digits
+- `amount` (number, required): minimum `50`
+
+```json
+{
+  "network": "mtn",
+  "phone_number": "08012345678",
+  "amount": 100
+}
+```
+
+## cURL
+
+```bash
+curl -X POST "https://api.example.com/v1/vtu/airtime" \
+  -H "X-API-KEY: lv_vtulab_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "network": "mtn",
+    "phone_number": "08012345678",
+    "amount": 100
+  }'
+```
+
+## Success Response (200)
+
+```json
+{
+  "status": true,
+  "message": "Airtime purchase successful",
+  "data": {
+    "note": "service-dependent object"
+  }
+}
+```
+
+If a test key is used, message becomes:
+
+`Airtime purchase successful (test mode)`
+
+## Error Response (400)
+
+```json
+{
+  "status": false,
+  "message": "Validation failed.",
+  "errors": {
+    "amount": [
+      "The amount field must be at least 50."
+    ]
+  }
+}
+```

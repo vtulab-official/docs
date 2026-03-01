@@ -1,0 +1,40 @@
+﻿---
+title: "Authentication"
+description: "API key authentication and mode behavior."
+---
+
+All protected endpoints require an API key.
+
+Use either header format:
+
+- `Authorization: Bearer <API_KEY>`
+- `X-API-KEY: <API_KEY>`
+
+## Key Types
+
+- Live key prefix: `lv_vtulab_sk_...`
+- Test key prefix: `sb_vtulab_sk_...`
+
+The key determines API mode internally:
+
+- Live key => `api_mode=live`
+- Test key => `api_mode=test`
+
+## Auth Errors
+
+- `401 API Key is missing.`
+- `401 Invalid or inactive API Key.`
+- `403 IP address not authorized.` when IP whitelist is configured and request IP is not listed.
+
+## Example
+
+```bash
+curl -X POST "https://api.example.com/v1/vtu/airtime" \
+  -H "Authorization: Bearer lv_vtulab_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "network": "mtn",
+    "phone_number": "08012345678",
+    "amount": 100
+  }'
+```

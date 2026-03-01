@@ -1,0 +1,44 @@
+﻿---
+title: "POST /v1/identity/bvn/retrieve"
+description: "Retrieve BVN by phone number."
+---
+
+## Authentication
+
+Required (`Authorization: Bearer <API_KEY>` or `X-API-KEY: <API_KEY>`)
+
+## Request Body
+
+- `phone_number` (string, required): exactly 11 digits
+- `is_consent` (boolean-like, required): must be accepted
+
+```json
+{
+  "phone_number": "08012345678",
+  "is_consent": true
+}
+```
+
+## cURL
+
+```bash
+curl -X POST "https://api.example.com/v1/identity/bvn/retrieve" \
+  -H "X-API-KEY: lv_vtulab_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "phone_number": "08012345678",
+    "is_consent": true
+  }'
+```
+
+## Success Response (200)
+
+```json
+{
+  "status": true,
+  "message": "BVN retrieval successful",
+  "data": {
+    "note": "service-dependent object"
+  }
+}
+```

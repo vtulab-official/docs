@@ -1,216 +1,273 @@
-{
+﻿{
   "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
+    "title": "VTULab API",
+    "version": "1.0.0",
+    "description": "VTU and identity verification endpoints."
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
+      "url": "https://api.example.com",
+      "description": "Production API subdomain"
+    },
     {
-      "bearerAuth": []
+      "url": "https://example.com/api",
+      "description": "Non-production Laravel API prefix"
     }
   ],
   "paths": {
-    "/plants": {
+    "/": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "summary": "API health",
         "responses": {
           "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "description": "Service online"
           }
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
-        "parameters": [
+    "/v1/vtu/data": {
+      "post": {
+        "summary": "Purchase data",
+        "security": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "bearerAuth": []
+          },
+          {
+            "apiKeyHeader": []
           }
         ],
-        "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "webhooks": {
-    "/plant/webhook": {
-      "post": {
-        "description": "Information about a new plant added to the store",
         "requestBody": {
-          "description": "Plant added to the store",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/DataPurchaseRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
+            "description": "Data purchase successful"
+          },
+          "400": {
+            "description": "Request failed"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/v1/vtu/airtime": {
+      "post": {
+        "summary": "Purchase airtime",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyHeader": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirtimePurchaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Airtime purchase successful"
+          },
+          "400": {
+            "description": "Request failed"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/v1/identity/nin/verify": {
+      "post": {
+        "summary": "Verify NIN",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyHeader": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NinVerifyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "NIN verified"
+          }
+        }
+      }
+    },
+    "/v1/identity/nin/retrieve": {
+      "post": {
+        "summary": "Retrieve NIN by phone number",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyHeader": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NinRetrieveRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "NIN retrieval successful"
+          }
+        }
+      }
+    },
+    "/v1/identity/bvn/verify": {
+      "post": {
+        "summary": "Verify BVN",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyHeader": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BvnVerifyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "BVN verification successful"
+          }
+        }
+      }
+    },
+    "/v1/identity/bvn/retrieve": {
+      "post": {
+        "summary": "Retrieve BVN by phone number",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "apiKeyHeader": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BvnRetrieveRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "BVN retrieval successful"
           }
         }
       }
     }
   },
   "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      },
+      "apiKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-KEY"
+      }
+    },
+    "schemas": {
+      "DataPurchaseRequest": {
+        "type": "object",
+        "required": ["plan_id", "phone_number"],
+        "properties": {
+          "plan_id": { "type": "integer", "example": 12 },
+          "phone_number": { "type": "string", "example": "08012345678" }
+        }
+      },
+      "AirtimePurchaseRequest": {
+        "type": "object",
+        "required": ["network", "phone_number", "amount"],
+        "properties": {
+          "network": { "type": "string", "enum": ["mtn", "airtel", "glo", "9mobile"] },
+          "phone_number": { "type": "string", "example": "08012345678" },
+          "amount": { "type": "number", "minimum": 50, "example": 100 }
+        }
+      },
+      "NinVerifyRequest": {
+        "type": "object",
+        "required": ["nin", "is_consent"],
+        "properties": {
+          "nin": { "type": "string", "example": "12345678901" },
+          "is_consent": { "type": "boolean", "example": true }
+        }
+      },
+      "NinRetrieveRequest": {
+        "type": "object",
+        "required": ["phone_number", "is_consent"],
+        "properties": {
+          "phone_number": { "type": "string", "example": "08012345678" },
+          "is_consent": { "type": "boolean", "example": true }
+        }
+      },
+      "BvnVerifyRequest": {
+        "type": "object",
+        "required": ["bvn", "is_consent"],
+        "properties": {
+          "bvn": { "type": "string", "example": "12345678901" },
+          "is_consent": { "type": "boolean", "example": true }
+        }
+      },
+      "BvnRetrieveRequest": {
+        "type": "object",
+        "required": ["phone_number", "is_consent"],
+        "properties": {
+          "phone_number": { "type": "string", "example": "08012345678" },
+          "is_consent": { "type": "boolean", "example": true }
+        }
       }
     }
   }

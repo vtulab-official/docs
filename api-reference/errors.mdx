@@ -1,0 +1,39 @@
+﻿---
+title: "Errors"
+description: "Standard error envelope and common HTTP statuses."
+---
+
+API responses are forced to JSON.
+
+## Standard Error Envelope
+
+```json
+{
+  "status": false,
+  "message": "error message",
+  "errors": null
+}
+```
+
+`errors` may be omitted for some controller-level failures.
+
+## Validation Error
+
+```json
+{
+  "status": false,
+  "message": "Validation failed.",
+  "errors": {
+    "field": ["The field is required."]
+  }
+}
+```
+
+## Common Status Codes
+
+- `400` Bad request / invalid signature / processing failure
+- `401` Missing or invalid API key
+- `403` Unauthorized IP
+- `404` Resource not found
+- `429` Too many requests
+- `500` Server error

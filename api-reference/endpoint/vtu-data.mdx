@@ -1,0 +1,62 @@
+﻿---
+title: "POST /v1/vtu/data"
+description: "Purchase a data plan for a phone number."
+---
+
+## Authentication
+
+Required (`Authorization: Bearer <API_KEY>` or `X-API-KEY: <API_KEY>`)
+
+## Request Body
+
+- `plan_id` (integer, required) - Must exist in `data_plans` table
+- `phone_number` (string, required) - 11 digits
+
+```json
+{
+  "plan_id": 12,
+  "phone_number": "08012345678"
+}
+```
+
+## cURL
+
+```bash
+curl -X POST "https://api.example.com/v1/vtu/data" \
+  -H "Authorization: Bearer lv_vtulab_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "plan_id": 12,
+    "phone_number": "08012345678"
+  }'
+```
+
+## Success Response (200)
+
+```json
+{
+  "status": true,
+  "message": "Data purchase successful",
+  "data": {
+    "note": "service-dependent object"
+  }
+}
+```
+
+If a test key is used, message becomes:
+
+`Data purchase successful (test mode)`
+
+## Error Response (400)
+
+```json
+{
+  "status": false,
+  "message": "Validation failed.",
+  "errors": {
+    "phone_number": [
+      "The phone number format is invalid."
+    ]
+  }
+}
+```

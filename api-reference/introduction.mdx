@@ -1,28 +1,38 @@
+﻿---
+title: "VTULab API"
+description: "Overview of base URLs, versioning, and available products."
 ---
-title: "Introduction"
-description: "Example section for showcasing API endpoints"
----
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete this section by removing the api-reference folder.
-</Note>
+## Base URL
 
-## Welcome
+Your base URL depends on environment:
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+- Production: `https://api.{your-domain}`
+- Development/staging (local Laravel default): `https://{your-domain}/api`
 
-<Card title="Plant Store Endpoints" icon="leaf" href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json">
-  View the OpenAPI specification file
-</Card>
+## Versioning
 
-## Authentication
+Current version is `v1`.
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+- VTU: `/v1/vtu/*`
+- Identity: `/v1/identity/*`
+
+## Health Endpoint
+
+`GET /`
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+  "name": "VTULab API",
+  "status": "online",
+  "version": "v1",
+  "docs": "https://docs.vtulab.com"
+}
 ```
+
+## Products Covered
+
+- Airtime purchase
+- Data purchase
+- NIN verification and retrieval
+- BVN verification and retrieval

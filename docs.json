@@ -2,9 +2,9 @@
   "theme": "mint",
   "name": "VTULab Docs",
   "colors": {
-    "primary": "#6236FF",
-    "light": "#6236FF",
-    "dark": "#6236FF"
+    "primary": "#1C8C6E",
+    "light": "#1C8C6E",
+    "dark": "#1C8C6E"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -19,14 +19,12 @@
             ]
           },
           {
-            "group": "Essentials",
+            "group": "API Basics",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "api-reference/introduction",
+              "api-reference/authentication",
+              "api-reference/rate-limits",
+              "api-reference/errors"
             ]
           }
         ]
@@ -35,18 +33,19 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "VTU",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/endpoint/vtu-data",
+              "api-reference/endpoint/vtu-airtime"
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Identity",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/endpoint/nin-verify",
+              "api-reference/endpoint/nin-retrieve",
+              "api-reference/endpoint/bvn-verify",
+              "api-reference/endpoint/bvn-retrieve"
             ]
           }
         ]
