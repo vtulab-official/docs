@@ -1,0 +1,55 @@
+---
+title: NIN Verification
+description: Securely verify National Identification Numbers in real-time.
+api: post /identity/nin/verify
+---
+
+Verify the identity of individuals using their National Identification Number (NIN). Our API provides access to verified records from the NIMC database.
+
+<Info>
+  **Consent Required**: You must obtain explicit consent from the individual before verifying their NIN. Requests without `is_consent: true` will be rejected.
+</Info>
+
+### Verification Modes
+
+We offer two modes of verification to suit your needs:
+
+- **Basic**: Returns essential information (Full Name, Gender, Date of Birth).
+- **Advanced**: Returns comprehensive details including the individual's photo (Base64).
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.vtulab.com/v1/identity/nin/verify \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --data '{
+    "nin": "12345678901",
+    "is_consent": true,
+    "mode": "basic"
+  }'
+```
+</RequestExample>
+
+<ResponseExample>
+```json Success (Basic)
+{
+  "status": true,
+  "message": "NIN Verified Successfully",
+  "data": {
+    "transaction": {
+      "title": "NIN Verification",
+      "amount": 100,
+      "reference": "VERIFY_65E8F...",
+      "status": "success"
+    },
+    "result": {
+      "first_name": "JOHN",
+      "last_name": "DOE",
+      "middle_name": "JAMES",
+      "gender": "M",
+      "date_of_birth": "1990-01-01"
+    }
+  }
+}
+```
+</ResponseExample>

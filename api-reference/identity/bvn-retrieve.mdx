@@ -1,0 +1,19 @@
+---
+title: BVN Retrieval
+description: Retrieve BVN details using a phone number.
+api: post /identity/bvn/retrieve
+---
+
+Retrieve BVN details associated with a phone number. 
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.vtulab.com/v1/identity/bvn/retrieve \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --data '{
+    "phone_number": "08123456789",
+    "is_consent": true
+  }'
+```
+</RequestExample>

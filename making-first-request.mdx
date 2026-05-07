@@ -1,0 +1,56 @@
+---
+title: Making your First Request
+description: A step-by-step guide to sending your first authenticated request.
+---
+
+In this guide, we will use `curl` to fetch the data catalog. This is the best way to verify that your API key and IP whitelisting are configured correctly.
+
+## 1. Prepare your API Key
+
+Copy your **Test Key** from the VTULab Dashboard. It should look like `test_...`.
+
+## 2. Construct the Request
+
+We will call the `GET /v1/vtu/data` endpoint. This endpoint does not require any parameters and is used to retrieve available data plans.
+
+```bash
+curl --request GET \
+  --url https://api.vtulab.com/v1/vtu/data \
+  --header 'Authorization: Bearer YOUR_TEST_KEY' \
+  --header 'Accept: application/json'
+```
+
+## 3. Analyze the Response
+
+A successful response will return a `200 OK` status and a JSON body containing `networks` and `data_plans`.
+
+```json
+{
+  "status": true,
+  "message": "Data catalog fetched successfully",
+  "data": {
+    "networks": [...],
+    "data_plans": [...]
+  }
+}
+```
+
+## Common Issues
+
+If your request fails, check the following:
+
+<AccordionGroup>
+  <Accordion title="401 Unauthorized" icon="lock">
+    Ensure you are passing the key correctly in the `Authorization` header as a Bearer token.
+  </Accordion>
+  <Accordion title="403 Forbidden" icon="shield-xmark">
+    Verify that the IP address of the machine making the request is added to your whitelist in the VTULab Dashboard.
+  </Accordion>
+  <Accordion title="429 Too Many Requests" icon="timer">
+    You have exceeded the rate limit. Wait a few seconds and try again.
+  </Accordion>
+</AccordionGroup>
+
+<Info>
+  Once you've successfully fetched the catalog, you're ready to start [Purchasing Data](/vtu/data#purchase-data).
+</Info>

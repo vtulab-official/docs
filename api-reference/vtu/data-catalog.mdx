@@ -1,0 +1,51 @@
+---
+title: Data Catalog
+description: Retrieve available mobile networks and data plans.
+api: get /vtu/data
+---
+
+This endpoint returns a comprehensive list of all active mobile networks and their associated data plans. We recommend caching this response for at least 1 hour to optimize performance.
+
+### Use Case
+- Displaying a list of networks to the user.
+- Populating a dropdown of data plans.
+- Syncing plan IDs and pricing with your local database.
+
+<Note>
+  The `price` field in the response is the amount that will be debited from your VTULab wallet for the specific plan.
+</Note>
+
+<RequestExample>
+```bash cURL
+curl --request GET \
+  --url https://api.vtulab.com/v1/vtu/data \
+  --header 'Authorization: Bearer YOUR_API_KEY'
+```
+</RequestExample>
+
+<ResponseExample>
+```json Success
+{
+  "status": true,
+  "message": "Data catalog fetched successfully",
+  "data": {
+    "networks": [
+      {
+        "id": 1,
+        "name": "MTN",
+        "code": "mtn"
+      }
+    ],
+    "data_plans": [
+      {
+        "id": 101,
+        "network_id": 1,
+        "name": "500MB SME",
+        "price": 150,
+        "validity": "30 Days"
+      }
+    ]
+  }
+}
+```
+</ResponseExample>

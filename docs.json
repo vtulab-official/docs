@@ -1,32 +1,35 @@
 {
+  "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "VTULab Docs",
+  "name": "VTULab API",
+  "appearance": {
+    "mode": "light",
+    "initialMode": "light",
+    "hideModeToggle": true
+  },
   "colors": {
     "primary": "#6236FF",
-    "light": "#6236FF",
-    "dark": "#6236FF"
+    "light": "#7C5CFF",
+    "dark": "#4B23D1"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.ico",
   "navigation": {
     "tabs": [
       {
         "tab": "Guides",
         "groups": [
           {
-            "group": "Overview",
-            "pages": [
-              "introduction"
-            ]
+            "group": "Getting Started",
+            "pages": ["introduction", "authentication", "base-url", "errors"]
           },
           {
-            "group": "Essentials",
+            "group": "Guides",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "quick-start",
+              "making-first-request",
+              "webhooks",
+              "going-live",
+              "rate-limits"
             ]
           }
         ]
@@ -35,27 +38,33 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "VTU Services",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/vtu/data-catalog",
+              "api-reference/vtu/data-purchase",
+              "api-reference/vtu/airtime-purchase"
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Identity Services",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/identity/nin-verify",
+              "api-reference/identity/nin-retrieve",
+              "api-reference/identity/bvn-verify",
+              "api-reference/identity/bvn-retrieve"
             ]
           }
         ]
       }
     ]
   },
+  "api": {
+    "openapi": "openapi.json"
+  },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo.png",
+    "dark": "/logo.png",
+    "height": 40
   },
   "navbar": {
     "links": [

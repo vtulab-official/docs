@@ -1,0 +1,43 @@
+---
+title: Rate Limits
+description: Understanding the API usage limits on VTULab.
+---
+
+To ensure the stability and reliability of our platform for all users, VTULab implements rate limits on all API requests.
+
+## Standard Limits
+
+Rate limits are applied based on your API key and are calculated on a per-minute basis.
+
+| Service Type | Rate Limit |
+| :--- | :--- |
+| **VTU Services** (Data, Airtime) | 60 requests per minute |
+| **Identity Services** (NIN, BVN) | 30 requests per minute |
+| **Information/Catalog** (GET) | 120 requests per minute |
+
+## Handling Rate Limits
+
+When you exceed a rate limit, the API will return a `429 Too Many Requests` error.
+
+### Headers
+
+Our API includes headers in every response to help you track your current usage:
+
+- `X-RateLimit-Limit`: The maximum number of requests allowed in the period.
+- `X-RateLimit-Remaining`: The number of requests remaining in the current period.
+- `Retry-After`: The number of seconds to wait before making another request.
+
+### Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Implement Backoff" icon="clock-rotate-left">
+    Use exponential backoff in your retry logic when you receive a 429 error.
+  </Card>
+  <Card title="Cache Catalog Data" icon="database">
+    Do not call the Data Catalog endpoint for every transaction. Cache it for at least 1 hour.
+  </Card>
+</CardGroup>
+
+<Info>
+  Need higher limits for a high-volume application? Contact our sales team at [sales@vtulab.com](mailto:sales@vtulab.com) to discuss custom plans.
+</Info>

@@ -1,0 +1,46 @@
+---
+title: Quickstart
+description: Get up and running with VTULab in less than 5 minutes.
+---
+
+Welcome to the VTULab Quickstart guide. This guide will walk you through the essential steps to start using our APIs for VTU and identity services.
+
+### Prerequisites
+
+Before you begin, ensure you have:
+- A [VTULab Account](https://vtulab.com/register).
+- Basic knowledge of making HTTP requests.
+
+---
+
+<Steps>
+  <Step title="Obtain API Keys">
+    Log in to your [VTULab Dashboard](https://vtulab.com/user/dashboard) and navigate to **Settings > API**. Here you will find your **Test Key** and **Live Key**. Use the Test Key for initial development.
+  </Step>
+  <Step title="Whitelist your Server IP">
+    For security, VTULab requires you to whitelist the IP address of the server making the API requests. Add your IP in the **API Settings** section.
+  </Step>
+  <Step title="Fund your Wallet">
+    Identity and live VTU services require a funded wallet. You can fund your wallet via bank transfer or card payment in the dashboard.
+  </Step>
+  <Step title="Make your first request">
+    Try the [Get Data Catalog](/vtu/data) endpoint using your Test Key to see available plans.
+  </Step>
+</Steps>
+
+## Next Steps
+
+Now that you're set up, you can:
+
+<CardGroup cols={2}>
+  <Card title="Making your First Request" icon="paper-plane" href="/making-first-request">
+    Detailed walkthrough of sending your first API call.
+  </Card>
+  <Card title="API Reference" icon="code" href="/vtu/data">
+    Explore the full API documentation and try it out in the playground.
+  </Card>
+</CardGroup>
+
+<Tip>
+  Need help during integration? Reach out to our developer support team at [support@vtulab.com](mailto:support@vtulab.com).
+</Tip>

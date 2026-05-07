@@ -1,0 +1,84 @@
+---
+title: Authentication
+description: Securely access the VTULab API using API keys.
+---
+
+VTULab uses API keys to authorize requests. All API requests must be made over [HTTPS](https://en.wikipedia.org/wiki/HTTPS) and include an API key.
+
+## API Keys
+
+You can find your API keys in the [API Settings](https://vtulab.com/user/settings/api) of your dashboard. We provide two keys for different environments:
+
+<CardGroup cols={2}>
+  <Card title="Live Key" icon="rocket" color="#6236FF">
+    Used for real transactions. Ensure your wallet is funded before using this key.
+  </Card>
+  <Card title="Test Key" icon="flask" color="#8B6BFF">
+    Used for sandbox testing. Transactions made with this key are simulated and do not debit your balance.
+  </Card>
+</CardGroup>
+
+## Authentication Format
+
+We support two ways to provide your API key in the request headers:
+
+### 1. Bearer Token (Recommended)
+
+Include your key in the `Authorization` header.
+
+```http
+Authorization: Bearer YOUR_API_KEY
+```
+
+### 2. Custom Header
+
+Alternatively, you can use the `X-API-KEY` header.
+
+```http
+X-API-KEY: YOUR_API_KEY
+```
+
+---
+
+## IP Whitelisting
+
+For maximum security, you must whitelist the IP addresses of your servers. Requests originating from non-whitelisted IPs will be rejected with a `403 Forbidden` error.
+
+<Note>
+  You can manage your whitelisted IPs in the **API Settings** section of the dashboard.
+</Note>
+
+## Base URL
+
+All API requests should be prefixed with the following base URL:
+
+```bash
+https://api.vtulab.com/v1
+```
+
+## API Status Codes
+
+| Code | Description |
+| :--- | :--- |
+| `200` | **Success**: The request was successful. |
+| `401` | **Unauthorized**: Invalid or missing API key. |
+| `403` | **Forbidden**: IP not whitelisted or account restricted. |
+| `422` | **Unprocessable Entity**: Validation errors in your payload. |
+| `429` | **Too Many Requests**: Rate limit exceeded. |
+
+<CodeGroup>
+```bash cURL
+curl -X GET "https://api.vtulab.com/v1/vtu/data" \
+     -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+```javascript Node.js
+const axios = require('axios');
+
+axios.get('https://api.vtulab.com/v1/vtu/data', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY'
+  }
+});
+```
+</CodeGroup>

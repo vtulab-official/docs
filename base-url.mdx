@@ -1,0 +1,31 @@
+---
+title: Base URL
+description: The root endpoint for all VTULab API requests.
+---
+
+All API requests to VTULab should be made using the base URL below. Our API is versioned to ensure stability as we introduce new features.
+
+## Production Environment
+
+The production base URL for all endpoints is:
+
+<Card
+  title="API Base URL"
+  icon="globe"
+>
+  `https://api.vtulab.com/v1`
+</Card>
+
+## HTTPS Only
+
+To protect your data and API keys, the VTULab API requires all requests to be made over **HTTPS**. Unencrypted HTTP requests will be automatically rejected.
+
+## Versioning
+
+The current version of the API is `v1`. We include the version number in the URL path to maintain backward compatibility for existing integrations.
+
+---
+
+<Tip>
+  When testing your integration, you can use the same base URL with your **Test Key**. The system will automatically process the request in Sandbox mode.
+</Tip>

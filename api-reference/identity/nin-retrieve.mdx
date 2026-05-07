@@ -1,0 +1,28 @@
+---
+title: NIN Retrieval
+description: Find NIN details using a linked phone number.
+api: post /identity/nin/retrieve
+---
+
+Retrieve NIN details associated with a specific phone number. This is useful when the individual has lost their NIN but has access to their registered phone number.
+
+### Usage Requirements
+
+1. **Phone Number**: Must be the 11-digit number registered with the NIN.
+2. **Consent**: You must confirm that you have obtained consent from the user.
+
+<Warning>
+  Retrieval services carry a higher charge than simple verification. Check your current rates in the dashboard.
+</Warning>
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.vtulab.com/v1/identity/nin/retrieve \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --data '{
+    "phone_number": "08123456789",
+    "is_consent": true
+  }'
+```
+</RequestExample>

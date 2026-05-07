@@ -1,0 +1,26 @@
+---
+title: Purchase Airtime
+description: Top up any mobile number with airtime instantly.
+api: post /vtu/airtime/purchase
+---
+
+Send airtime to any mobile network in Nigeria. The transaction is processed in real-time.
+
+### Important Notes
+- Minimum amount is **NGN 50**.
+- The `network` parameter is case-insensitive.
+- Always use the 11-digit format for phone numbers (e.g., `08123456789`).
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.vtulab.com/v1/vtu/airtime/purchase \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "network": "mtn",
+    "phone_number": "08123456789",
+    "amount": 100
+  }'
+```
+</RequestExample>

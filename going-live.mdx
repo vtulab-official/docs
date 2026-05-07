@@ -1,0 +1,42 @@
+---
+title: Going Live
+description: Transitioning your integration from Test to Production.
+---
+
+Once you have completed your integration and testing using the **Test Key**, follow these steps to start processing real transactions.
+
+## Checklist for Production
+
+Before switching to your Live Key, ensure you have completed the following:
+
+<Steps>
+  <Step title="Verify IP Whitelist">
+    Ensure your production server's IP address is whitelisted in the [API Settings](https://vtulab.com/user/settings/api).
+  </Step>
+  <Step title="Switch API Keys">
+    Replace your `test_...` key with your `live_...` key in your environment variables.
+  </Step>
+  <Step title="Check Wallet Balance">
+    Identity and VTU services are charged in real-time. Ensure your wallet has sufficient balance for live operations.
+  </Step>
+  <Step title="Configure Webhooks">
+    Make sure your live webhook URL is configured and your server is ready to receive `transaction.updated` events.
+  </Step>
+</Steps>
+
+## Live vs. Test Mode
+
+| Feature | Test Mode (Sandbox) | Live Mode (Production) |
+| :--- | :--- | :--- |
+| **API Key** | `test_...` | `live_...` |
+| **Wallet Impact** | None (Simulated) | Real-time debit |
+| **Service Delivery** | Simulated success/failure | Real delivery to telcos/NIMC |
+| **Reference Prefix** | `TEST_...` | `DATA_...`, `AIRTIME_...`, etc. |
+
+<Warning>
+  **Important**: Double-check your recipient phone numbers in Live mode. Transactions made to wrong numbers cannot be reversed once successful.
+</Warning>
+
+<Note>
+  We recommend performing a small transaction (e.g., 100 Airtime) with your Live Key to verify the end-to-end flow before opening your application to all users.
+</Note>

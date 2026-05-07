@@ -1,0 +1,97 @@
+---
+title: Webhooks
+description: Real-time event notifications for your transactions.
+---
+
+Webhooks enable your application to receive real-time notifications from VTULab. Instead of polling our API to check if a transaction is complete, we'll push the status update directly to your server as soon as it happens.
+
+<Card title="Webhook URL" icon="link" href="https://vtulab.com/user/settings/api">
+  Configure your endpoint URL in the **API Settings** section of your dashboard.
+</Card>
+
+## Supported Events
+
+Currently, we support the following event:
+
+| Event | Description |
+| :--- | :--- |
+| `transaction.updated` | Fired when a transaction's status changes (e.g., from `processing` to `success` or `failed`). |
+
+## Payload Structure
+
+When an event occurs, VTULab sends a `POST` request with a JSON body.
+
+<CodeGroup>
+```json Payload Example
+{
+  "event": "transaction.updated",
+  "data": {
+    "reference": "DATA_65E8F0B2...",
+    "status": "success",
+    "amount": 150,
+    "type": "data",
+    "network": "MTN",
+    "phone_number": "08123456789",
+    "created_at": "2024-03-06T12:00:00Z"
+  }
+}
+```
+</CodeGroup>
+
+### Field Definitions
+
+<ResponseField name="event" type="string">
+  The type of event being sent.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  <Expandable title="properties">
+    <ResponseField name="reference" type="string">
+      The unique VTULab transaction reference.
+    </ResponseField>
+    <ResponseField name="status" type="string">
+      The new status: `success` or `failed`.
+    </ResponseField>
+    <ResponseField name="amount" type="number">
+      The transaction amount in NGN.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+---
+
+## Best Practices
+
+### 1. Verification
+Always verify that the webhook is originating from VTULab. We recommend checking the request's source IP against our official list or verifying the signature if provided.
+
+### 2. Acknowledge Promptly
+Your server should return a `200 OK` response within 5 seconds. If your processing logic takes longer, we recommend queuing the job and returning the response immediately.
+
+### 3. Handle Idempotency
+Ensure your webhook handler is idempotent. You might receive the same notification more than once in rare network scenarios. Use the `reference` field to track processed events.
+
+## Example Handler (Node.js)
+
+```javascript
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.post('/webhooks/vtulab', (req, res) => {
+  const { event, data } = req.body;
+
+  if (event === 'transaction.updated') {
+    console.log(`Transaction ${data.reference} updated to ${data.status}`);
+    
+    // Perform your business logic here (e.g., credit user, send email)
+    
+  }
+
+  // Always return a 200 OK
+  res.status(200).send('Webhook Received');
+});
+
+app.listen(3000, () => console.log('Webhook server running on port 3000'));
+```

@@ -1,0 +1,68 @@
+---
+title: Errors
+description: Understanding and handling API error responses.
+---
+
+VTULab uses standard HTTP response codes to indicate the success or failure of an API request. In general, codes in the `2xx` range indicate success, codes in the `4xx` range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.), and codes in the `5xx` range indicate an error with VTULab's servers.
+
+## HTTP Status Codes
+
+| Code | Description |
+| :--- | :--- |
+| `200 - OK` | Everything worked as expected. |
+| `400 - Bad Request` | The request was unacceptable, often due to missing a required parameter. |
+| `401 - Unauthorized` | No valid API key provided. |
+| `403 - Forbidden` | The API key doesn't have permissions for the request or IP is not whitelisted. |
+| `404 - Not Found` | The requested resource doesn't exist. |
+| `422 - Unprocessable Entity` | Validation errors (e.g. invalid phone number format). |
+| `429 - Too Many Requests` | Too many requests hit the API too quickly. |
+| `500, 502, 503, 504 - Server Errors` | Something went wrong on VTULab's end. |
+
+## Error Response Structure
+
+When a request fails, we return a JSON object containing the error details.
+
+<CodeGroup>
+```json Error Example
+{
+  "status": false,
+  "message": "The given data was invalid.",
+  "errors": {
+    "phone_number": [
+      "The phone number must be exactly 11 digits."
+    ]
+  }
+}
+```
+</CodeGroup>
+
+### Field Definitions
+
+<ResponseField name="status" type="boolean">
+  Always `false` for error responses.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  A high-level summary of the error.
+</ResponseField>
+
+<ResponseField name="errors" type="object">
+  An object containing field-specific validation messages. The keys represent the field names, and the values are arrays of error strings.
+</ResponseField>
+
+---
+
+## Handling Errors
+
+### Validation Errors (422)
+These occur when the data you sent doesn't meet our requirements. Always check the `errors` object for specific details.
+
+### Authentication Errors (401/403)
+Double-check that your API key is correctly formatted in the header and that your server's IP address is whitelisted in the dashboard.
+
+### Rate Limiting (429)
+If you hit our rate limits, slow down your requests and implement a retry logic with exponential backoff.
+
+<Tip>
+  Need help? Contact our support team at [support@vtulab.com](mailto:support@vtulab.com) with your transaction reference or request payload.
+</Tip>

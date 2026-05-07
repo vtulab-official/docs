@@ -1,55 +1,105 @@
 ---
-title: "Introduction"
-description: "Welcome to the VTULab API — powering identity and VTU infrastructure across Africa."
+title: Introduction
+description: Build and scale your fintech products with VTULab APIs.
 ---
 
-<img className="block dark:hidden" src="/images/hero-light.png" alt="VTULab API" />
-<img className="hidden dark:block" src="/images/hero-dark.png" alt="VTULab API Dark" />
+# Build airtime, data, and identity products with VTULab
 
-## 👋 Welcome to VTULab
-
-VTULab provides reliable APIs for:
-
-- ✅ NIN verification
-- ✅ Identity services
-- ✅ Airtime and data purchases
-- ✅ Wallet and transaction management
-
-Whether you're building a fintech app, verification platform, or telecom service, VTULab helps you launch faster.
-
----
-
-## 🚀 Getting Started
-
-Integrating VTULab is simple:
+Integrate airtime, data bundles, and identity services into your applications with a single, unified API designed for developers.
 
 <CardGroup cols={2}>
-  <Card icon="key" href="/authentication" title="Authentication">
-    Use your API key to authenticate requests securely.
+  <Card title="Quickstart Guide" icon="bolt" href="/quick-start">
+    Get your API keys and make your first request in under 5 minutes.
   </Card>
-  <Card icon="shield-check" href="/test-and-live" title="Test and Live Mode">
-    Switch between sandbox and production with your API key.
+  <Card title="API Reference" icon="code" href="/api-reference/vtu/data-catalog">
+    Explore our interactive API explorer and try endpoints in real-time.
   </Card>
 </CardGroup>
 
----
+## Core Services
 
-## 🔐 How It Works
+Everything you need to power your mobile services and identity workflows.
 
-VTULab uses a **single endpoint system**.
+<CardGroup cols={3}>
+  <Card title="Airtime" icon="phone">
+    Automated top-up for MTN, Airtel, Glo, and 9mobile.
+  </Card>
+  <Card title="Data Bundles" icon="wifi">
+    SME, Gifting, and Corporate Gifting bundles across all networks.
+  </Card>
+  <Card title="NIN Verification" icon="id-card">
+    Real-time identity verification via NIMC database.
+  </Card>
+  <Card title="BVN Verification" icon="building-columns">
+    Validate bank records and KYC details instantly.
+  </Card>
+  <Card title="Wallet Funding" icon="wallet">
+    Automated wallet funding for seamless transactions.
+  </Card>
+  <Card title="Transactions" icon="list-check">
+    Query and track every transaction with detailed status reports.
+  </Card>
+</CardGroup>
 
-You don’t need separate sandbox URLs. Instead:
+## Seamless Integration
 
-- `pk_test_...` → Test mode
-- `pk_live_...` → Live mode
+Get started with just a few lines of code. No complex setups or legacy protocols.
 
-The API automatically detects your mode from the key.
-
-Example request:
-
-```bash
-curl https://api.vtulab.com/v1/identity/nin/verify \
-  -H "Authorization: Bearer pk_test_xxxxxxxxx" \
-  -H "Content-Type: application/json" \
-  -d '{"nin": "12345678901"}'
+<CodeGroup>
+```bash cURL
+curl --request GET \
+  --url https://api.vtulab.com/v1/vtu/data \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --header 'Accept: application/json'
 ```
+
+```javascript Node.js
+const axios = require('axios');
+
+const response = await axios.get('https://api.vtulab.com/v1/vtu/data', {
+  headers: { 'Authorization': 'Bearer YOUR_API_KEY' }
+});
+
+console.log(response.data);
+```
+</CodeGroup>
+
+## Why developers choose VTULab
+
+<CardGroup cols={2}>
+  <Card title="Developer-First" icon="square-code">
+    Modern REST APIs, detailed documentation, and a native sandbox environment.
+  </Card>
+  <Card title="Fintech-Grade Reliability" icon="shield-check">
+    99.9% uptime with redundant connections to all major providers.
+  </Card>
+  <Card title="Production Ready" icon="rocket">
+    Built to handle high-volume traffic with low-latency response times.
+  </Card>
+  <Card title="Instant Webhooks" icon="bell">
+    Receive real-time notifications for transaction updates and wallet events.
+  </Card>
+</CardGroup>
+
+## Quick Start
+
+Follow these four steps to go from zero to production.
+
+<Steps>
+  <Step title="Create an Account">
+    Sign up at [vtulab.com](https://vtulab.com/register) to access your developer dashboard.
+  </Step>
+  <Step title="Generate API Keys">
+    Obtain your **Test** and **Live** keys from the **Settings > API** section.
+  </Step>
+  <Step title="Make First Request">
+    Use your Test Key to call the [Data Catalog](/api-reference/vtu/data-catalog) endpoint.
+  </Step>
+  <Step title="Go Live">
+    Fund your wallet, switch to your Live Key, and start processing real transactions.
+  </Step>
+</Steps>
+
+<Info>
+  **Need help?** Our developer support team is available 24/7. Join our [Discord Community](https://discord.gg/vtulab) or email [support@vtulab.com](mailto:support@vtulab.com).
+</Info>

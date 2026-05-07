@@ -1,0 +1,29 @@
+---
+title: BVN Verification
+description: Verify Bank Verification Numbers instantly.
+api: post /identity/bvn/verify
+---
+
+The BVN Verification API allows you to validate the bank records of individuals. This is a critical step for KYC (Know Your Customer) in fintech applications.
+
+### Modes
+
+- **Basic**: Essential profile data.
+- **Advanced**: Full profile data including residential address and more.
+
+<Tip>
+  Identity services can be tested using the Sandbox environment with your `test_...` key. Test requests will return mock data and won't charge your wallet.
+</Tip>
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.vtulab.com/v1/identity/bvn/verify \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
+  --data '{
+    "bvn": "12345678901",
+    "is_consent": true,
+    "mode": "basic"
+  }'
+```
+</RequestExample>
