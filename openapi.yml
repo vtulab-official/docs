@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  title: VTULab API
+  description: Premium APIs for VTU, bill payments, and identity services.
+  version: 1.0.0
+servers:
+  - url: https://api.vtulab.com/v1
+    description: Production Server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Enter your API Secret Key.
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        reference: { type: string, example: "VTU_123456" }
+        status: { type: string, example: success }
+        amount: { type: number, example: 500 }
+        description: { type: string, example: "Data Purchase for 08123456789" }
+paths:
+  /vtu/data/purchase:
+    post:
+      summary: Purchase Data
+      description: Buy a data bundle for any Nigerian mobile number.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [network_id, plan_id, phone_number]
+              properties:
+                network_id: { type: integer, description: "ID of the network (1: MTN, 2: Airtel, etc.)", example: 1 }
+                plan_id: { type: integer, description: "ID of the data plan.", example: 101 }
+                phone_number: { type: string, description: "Recipient 11-digit phone number.", example: "08123456789" }
+                reference: { type: string, description: "Your unique reference.", example: "my_ref_001" }
+      responses:
+        '200': { description: Success }
+
+  /vtu/airtime/purchase:
+    post:
+      summary: Purchase Airtime
+      description: Buy airtime for any Nigerian mobile number.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [network, phone_number, amount]
+              properties:
+                network: { type: string, enum: [mtn, airtel, glo, 9mobile], example: mtn }
+                phone_number: { type: string, example: "08123456789" }
+                amount: { type: number, minimum: 50, example: 100 }
+                reference: { type: string, example: "air_ref_123" }
+      responses:
+        '200': { description: Success }
+
+  /identity/nin/verify:
+    post:
+      summary: Verify NIN
+      description: Real-time National Identification Number verification.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [nin, is_consent]
+              properties:
+                nin: { type: string, description: "11-digit NIN.", example: "12345678901" }
+                is_consent: { type: boolean, description: "Confirm user consent.", example: true }
+                mode: { type: string, enum: [basic, advanced], default: basic, example: basic }
+      responses:
+        '200': { description: Success }
+
+  /identity/nin/retrieve:
+    post:
+      summary: Retrieve NIN
+      description: Retrieve NIN details via phone number.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phone_number, is_consent]
+              properties:
+                phone_number: { type: string, example: "08123456789" }
+                is_consent: { type: boolean, example: true }
+      responses:
+        '200': { description: Success }
+
+  /identity/bvn/verify:
+    post:
+      summary: Verify BVN
+      description: Real-time Bank Verification Number validation.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [bvn, is_consent]
+              properties:
+                bvn: { type: string, description: "11-digit BVN.", example: "22233344455" }
+                is_consent: { type: boolean, example: true }
+      responses:
+        '200': { description: Success }
+
+  /identity/bvn/retrieve:
+    post:
+      summary: Retrieve BVN
+      description: Retrieve BVN details via phone number.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phone_number, is_consent]
+              properties:
+                phone_number: { type: string, example: "08123456789" }
+                is_consent: { type: boolean, example: true }
+      responses:
+        '200': { description: Success }

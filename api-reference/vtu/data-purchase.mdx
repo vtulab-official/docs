@@ -1,14 +1,14 @@
 ---
 title: Purchase Data
 description: Buy a data bundle for a specific phone number.
-api: post /vtu/data/purchase
+api: "POST /vtu/data/purchase"
 ---
 
 Purchase a data bundle instantly for any Nigerian mobile number. Ensure your wallet has sufficient balance before making a request in live mode.
 
 ### Request Body
 
-The request requires the `plan_id` (obtained from the catalog) and the recipient's `phone_number`.
+The request requires the `network_id`, `plan_id` (obtained from the catalog), and the recipient's `phone_number`.
 
 <RequestExample>
 ```bash cURL
@@ -17,8 +17,10 @@ curl --request POST \
   --header 'Authorization: Bearer YOUR_API_KEY' \
   --header 'Content-Type: application/json' \
   --data '{
+    "network_id": 1,
     "plan_id": 101,
-    "phone_number": "08123456789"
+    "phone_number": "08123456789",
+    "reference": "unique_ref_123"
   }'
 ```
 </RequestExample>
@@ -32,12 +34,8 @@ curl --request POST \
     "transaction": {
       "reference": "DATA_65E8F...",
       "status": "success",
-      "amount": 150
-    },
-    "result": {
-      "phone_number": "08123456789",
-      "network": "MTN",
-      "plan": "500MB"
+      "amount": 150,
+      "description": "MTN 1GB SME Data to 08123456789"
     }
   }
 }

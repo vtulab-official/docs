@@ -1,0 +1,78 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "VTULab API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.vtulab.com/v1"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "reference": { "type": "string", "example": "VTU_123" },
+          "status": { "type": "string", "example": "success" }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/vtu/data/purchase": {
+      "post": {
+        "summary": "Purchase Data",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["plan_id", "phone_number"],
+                "properties": {
+                  "plan_id": {
+                    "type": "integer",
+                    "example": 101
+                  },
+                  "phone_number": {
+                    "type": "string",
+                    "example": "08123456789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "boolean", "example": true },
+                    "data": { "$ref": "#/components/schemas/Transaction" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

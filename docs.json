@@ -8,9 +8,7 @@
     "hideModeToggle": true
   },
   "colors": {
-    "primary": "#6236FF",
-    "light": "#7C5CFF",
-    "dark": "#4B23D1"
+    "primary": "#6236FF"
   },
   "favicon": "/favicon.ico",
   "navigation": {
@@ -59,29 +57,11 @@
     ]
   },
   "api": {
-    "openapi": "openapi.json"
+    "openapi": "openapi.yml"
   },
   "logo": {
     "light": "/logo.png",
     "dark": "/logo.png",
     "height": 40
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:support@vtulab.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://vtulab.com/user/dashboard"
-    }
-  },
-  "footer": {
-    "socials": {
-      "facebook": "https://facebook.com/vtulab"
-    }
   }
 }
